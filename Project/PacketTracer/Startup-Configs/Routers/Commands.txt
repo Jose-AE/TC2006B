@@ -1,0 +1,45 @@
+en
+conf t
+hostname <NombreDelDispositivo>
+enable secret osomar
+line console 0
+password osomar
+login
+exit
+line vty 0 4
+password osomar
+login
+exit
+service password-encryption
+
+security passwords min-length 5
+
+login block-for 180 attempts 3 within 60
+
+line vty 0 4
+exec-timeout 3
+exit
+
+ip domain-name omi.mx
+crypto key generate rsa general-keys modulus 1024
+username admin secret osomar
+line vty 0 4
+transport input ssh
+login local
+exit
+
+
+interface <Interfaz>
+Router(config-if)# ip address <DirecciónIP> <MáscaraDeSubred>
+Router(config-if)# description <Descripción>
+Router(config-if)# no shutdown
+Router(config-if)# exit
+
+ip route <RedDestino> <MáscaraDeSubred> <SiguienteSalto>
+
+
+ip route 0.0.0.0 0.0.0.0 <SiguienteSalto>
+
+end
+
+wr
