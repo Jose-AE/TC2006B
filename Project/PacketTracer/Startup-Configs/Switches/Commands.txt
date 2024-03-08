@@ -1,0 +1,34 @@
+enable
+configure terminal
+hostname ---------
+
+
+enable secret osomar
+line console 0
+password osomar
+login
+exit
+line vty 0 15
+password osomar
+login
+exit
+service password-encryption
+
+
+
+interface vlan 1
+ip address <DirecciónIP> 255.255.255.0
+no shutdown
+exit
+ip default-gateway <PuertaDeEnlace>
+
+end
+wr
+
+
+
+172.16.11.5
+
+255.255.255.0
+
+172.16.11.1
